@@ -1,0 +1,20 @@
+import Adafruit_BMP.BMP085 as BMP085
+import Adafruit_DHT
+import time
+from firebase import firebase
+sensor = BMP085.BMP085()
+DHT_SENSOR = Adafruit_DHT.DHT11
+DHT_PIN = 21
+firebase= firebase.FirebaseApplication('https://sugar-rocket.firebaseio.com/')
+
+while True:
+temp=sensor.read_temperature()
+pressure=sensor.read_pressure()
+altitude=sensor.read_altitude()
+sea_peasure=sensor.read_sealevel_pressure()
+humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PIN)
+sv=("Temp={0:0.2f}C Humidity={1:0.3f}%".format(temperature, humidity))
+result = firebase.post('Baloon 27-11-2019', {'pressure':str(pressure), 'altitude':str(altitude), 'sea_peasure':str(sea_peasure),"sv":str(sv)})
+print(result)
+time.sleep(1);
+
