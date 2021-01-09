@@ -1,0 +1,6 @@
+from firebase import firebase
+firebase= firebase.FirebaseApplication('https://sugar-rocket.firebaseio.com/')
+
+while True:
+result = firebase.post('Sugar Rocket_BMP180', {Any Sensor Value for sending to firebase console})
+print(result)
